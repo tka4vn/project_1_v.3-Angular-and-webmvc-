@@ -1,0 +1,52 @@
+<h4>Редактирование:</h4>
+<div class="input-group mt-2">
+  <input type="text" name="name" value="{{ser?.name}}" [(ngModel)]="editName"
+         class="myCard form-control" aria-describedby="button-addon4">
+  <div class="input-group-append" id="button-addon4">
+    <a class="myCard btn btn-outline-success" (click)="edit(ser?.idServices)">Сохранить</a>
+    <a class="myCard btn btn-outline-danger"  (click)="remove()">Удалить</a>
+  </div>
+</div>
+
+<div class="mt-4 mb-2">Список доступных ролей у сервиса {{ser?.name}}:</div>
+
+<div class="btn-group dropright mb-3">
+  <button type="button" class="myCard btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Добавить
+  </button>
+  <div class="myCard dropdown-menu">
+    <option style="cursor: pointer;" class="myCard dropdown-item" *ngFor="let rol of roles" (click)="addRole(rol.idRole)">
+      {{rol.name}}
+    </option>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" [routerLink]="[linkRol]">Создать роль</a>
+  </div>
+</div>
+
+<span *ngFor="let idSerRol of ser?.idSerRol">
+    <li class="myCard input-group mb-3">
+      <div class="input-group-prepend">
+          <span *ngIf="idSerRol.idRole == owner">
+            <a class="btn btn-outline-success">x</a>
+          </span>
+          <span *ngIf="idSerRol.idRole != owner">
+            <a class="btn btn-outline-danger" (click)="removeRole(idSerRol?.idRole)">x</a>
+          </span>
+      </div>
+      <div class="form-control" aria-describedby="basic-addon1">
+        <span class="ml-2 mr-3">{{idSerRol.name}}</span>
+        <span *ngFor="let ing of ingress">
+          <span *ngIf="ing.idIngSer.idServices == ser?.idServices">
+            <span *ngIf="ing.idIngRol.idRole == idSerRol.idRole">
+              <span *ngFor="let use of users">
+                <span *ngIf="use?.id == ing.idIngUse.id">
+                  <span class="text-secondary"><i> | {{use.name}}</i></span>
+                </span>
+              </span>
+            </span>
+          </span>
+        </span>
+      </div>
+    </li>
+</span>
+

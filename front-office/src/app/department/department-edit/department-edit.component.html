@@ -1,0 +1,9 @@
+<h4>Редактирование:</h4>
+ <div class="input-group mt-2">
+    <input type="text" name="name" value="{{dep?.name}}" [(ngModel)]="editName"
+           class="myCard form-control" aria-describedby="button-addon4">
+    <div class="input-group-append" id="button-addon4">
+      <a class="myCard btn btn-outline-success" (click)="edit(dep?.id)">Сохранить</a>
+      <a class="myCard btn btn-outline-danger"  (click)="remove(dep?.id)">Удалить</a>
+    </div>
+  </div>

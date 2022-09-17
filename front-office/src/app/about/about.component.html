@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="row">
+    <div style="position: initial;" class="col-5">
+      <ng-container *ngFor="let use of users"><ng-container *ngIf="use.name == idUser">
+        <ng-container *ngFor="let app of appointment"><ng-container *ngIf="use.idUseEmp?.id == app.idAppEmp?.id">
+          <h5 class="mb-3">Здравствуйте, {{app.idAppEmp?.fullName}}</h5>
+          <div class="text-secondary mb-2"><strong>Должность: </strong><i>{{app.idAppPos?.name}}</i></div>
+          <div class="text-secondary mb-3"><strong>Департамент: </strong><i>{{app.idAppDep?.name}}</i></div>
+        </ng-container></ng-container>
+      </ng-container></ng-container>
+    </div>
+
+    <!-- заявки требующие одобрения -->
+    <div style="position: initial;" class="col-3">
+      <ng-container *ngFor="let use of users"><ng-container *ngIf="use.name == idUser">
+        <ng-container *ngFor="let req of request">
+          <!--Логика для Владельца-->
+          <ng-container *ngFor="let ing of ingress"><ng-container *ngIf="req.idReqSer?.idServices == ing.idIngSer.idServices"><ng-container *ngFor="let use of users"><ng-container *ngIf="use.name == idUser"><ng-container *ngIf="use.id == ing.idIngUse.id"><ng-container *ngIf="ing.idIngRol.idRole == owner && req.idReqSta?.idStatus == 1">
+            <div class="myCard">
+              <div class="card-header text-success tools">
+                <i>{{req.idReqSta?.name}}</i>
+              </div>
+              <div class="m-2">
+                <span>Сервис: </span><i>{{req.idReqSer?.name}}</i><br/>
+                <span>Пользователь: </span><i>{{req.idReqUse?.name}}</i><br/>
+                <span>Роль: </span><i>{{req.idReqRol?.name}}</i><br/>
+                <span>Дата: </span><i>{{req.dateReq}}</i><br/>
+              </div>
+              <div class="card-footer text-muted tools " style="height: 65px;">
+                <div class="row justify-content-end">
+                  <div class="col-auto">
+                    <!--Хотят стать администратором-->
+                    <ng-container *ngIf="req.idReqRol?.idRole == admin">
+                      <a class="btn btn-outline-success" (click)="addIngress(req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole); editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 25)">Одобрить</a>
+                    </ng-container>
+                    <!--Если НЕ хотят стать администратором-->
+                    <ng-container *ngIf="req.idReqRol?.idRole != admin">
+                      <a class="btn btn-outline-success" (click)="editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 26)">Одобрить</a>
+                    </ng-container>
+                    <a class="btn btn-outline-danger ml-2" (click)="editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 23); removeIngress(req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole)">Отказать</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>
+
+          <!--Логика для Администратора-->
+          <ng-container *ngFor="let ing of ingress"><ng-container *ngIf="req.idReqSer?.idServices == ing.idIngSer.idServices"><ng-container *ngFor="let use of users"><ng-container *ngIf="use.name == idUser && use.id == ing.idIngUse.id && ing.idIngRol.idRole == admin && req.idReqSta?.idStatus == 26">
+            <div class="myCard">
+              <div class="card-header text-success tools">
+                <i>{{req.idReqSta?.name}}</i>
+                <span style="float: right;"><a (click)="removeRequest(req.id)" style="color: #e11c1c; cursor: pointer;">х</a></span>
+              </div>
+              <div class="m-2">
+                <span>Сервис: </span><i>{{req.idReqSer?.name}}</i><br/>
+                <span>Пользователь: </span><i>{{req.idReqUse?.name}}</i><br/>
+                <span>Роль: </span><i>{{req.idReqRol?.name}}</i><br/>
+                <span>Дата: </span><i>{{req.dateReq}}</i><br/>
+              </div>
+              <div class="card-footer text-muted tools " style="height: 65px;">
+                <div class="row justify-content-end">
+                  <div class="col-auto">
+                    <a class="btn btn-outline-success" (click)="addIngress(req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole); editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 25)">Одобрить</a>
+                    <a class="btn btn-outline-danger ml-2" (click)="editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 24); removeIngress(req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole)">Отказать</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>
+
+    </div>
+    <div style="position: initial;" class="myCard col-4">
+      <div class="mb-2 mt-1 text-secondary text-center"><b>Доступные сервисы </b></div>
+      <table class="table table-hover">
+        <tbody>
+        <ng-container *ngFor="let use of users"><ng-container *ngIf="use.name == idUser">
+          <ng-container *ngFor="let ing of ingress"><ng-container *ngIf="use.id == ing.idIngUse.id">
+            <tr>
+              <td class="text-secondary"><ng-container *ngFor="let ser of services"><ng-container *ngIf="ser.idServices == ing.idIngSer.idServices">{{ser.name}}: </ng-container></ng-container></td>
+              <td class="text-secondary"><ng-container *ngFor="let rol of roles"><ng-container *ngIf="rol.idRole == ing.idIngRol.idRole"><i>{{rol.name}} </i></ng-container></ng-container></td>
+            </tr>
+          </ng-container></ng-container>
+        </ng-container></ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<ng-container *ngFor="let use of users"><ng-container *ngIf="use.name == idUser">
+  <div class="mb-2 text-secondary"><b>Ваши заявки на рассмотрении: </b></div>
+  <div class="card-columns ml-5">
+    <ng-container *ngFor="let req of request">
+      <ng-container *ngFor="let use of users"><ng-container *ngIf="req.idReqUse?.id == use.id && use.name == idUser">
+        <div class="myCard card my-3">
+          <div class="card-header text-primary tools">
+            <span>Статус: </span><i>{{req.idReqSta?.name}}</i>
+            <span style="float: right;"><a (click)="removeRequest(req.id)" style="color: #e11c1c; cursor: pointer;">х</a></span>
+          </div>
+          <div class="m-2">
+            <span>Сервис: </span><ng-container *ngFor="let ser of services"><ng-container *ngIf="req.idReqSer?.idServices == ser.idServices"> <i>{{ser.name}}</i><br/></ng-container></ng-container>
+            <span>Роль: </span><ng-container *ngFor="let rol of roles"><ng-container *ngIf="req.idReqRol?.idRole == rol.idRole"> <i>{{rol.name}}</i><br/></ng-container></ng-container>
+            <span>Дата: </span><i>{{req.dateReq}}</i><br/>
+          </div>
+        </div>
+      </ng-container></ng-container>
+    </ng-container>
+  </div>
+  <hr>
+</ng-container></ng-container>

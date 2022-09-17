@@ -1,0 +1,22 @@
+<a class="myCard btn btn-outline-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+  Добавить департамент
+</a>
+<div class="collapse" id="collapseExample">
+    <div class="form-group mt-3">
+        <div class="form-group">
+          <input type="text" class="myCard form-control" placeholder="Введите имя" [(ngModel)]="newName">
+        </div>
+        <div class="form-group mb-5">
+          <button type="submit" class="myCard btn btn-outline-success" (click)="addDepartment()" >Сохранить</button>
+        </div>
+    </div>
+</div>
+
+  <div class="card-columns">
+    <div class="myCard card my-3"  *ngFor="let dep of department">
+      <div class="m-2">
+        <a [routerLink]="[linkDep, dep.id]"><span>{{dep.name}}</span></a><br/>
+      </div>
+    </div>
+</div>
+

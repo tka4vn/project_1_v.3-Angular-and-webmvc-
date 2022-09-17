@@ -1,0 +1,66 @@
+<a class="myCard btn btn-outline-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+  Новое назначение
+</a>
+<div class="collapse" id="collapseExample">
+  <div class="form-group mt-3">
+      <div class="form-group">
+        <input type="date" class="myCard form-control"
+               [(ngModel)]="newDateApp" placeholder="Введите дату">
+      </div>
+      <div class="input-group mb-3">
+        <select class="myCard custom-select" required [(ngModel)]="newIdAppEmp" >
+          <option value="0">Выберите сотрудника ...</option>
+          <option *ngFor="let emp of employee" [value]="emp.id">{{emp.fullName}}</option>
+        </select>
+      </div>
+     <div class="input-group mb-3">
+        <select class="myCard custom-select" [(ngModel)]="newIdAppPos">
+          <option value="0">Выберите должность ...</option>
+          <option *ngFor="let pos of position" [value]="pos.id">{{pos.name}}</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <select class="myCard custom-select" [(ngModel)]="newIdAppDep">
+          <option value="0">Выберите департамент ...</option>
+          <option *ngFor="let dep of department" [value]="dep.id">{{dep.name}}</option>
+        </select>
+      </div>
+      <div class="form-group mb-5">
+        <button type="submit" class="myCard btn btn-outline-success" (click)="addAppointment()">Сохранить</button>
+      </div>
+  </div>
+</div>
+
+
+<div class="card-columns">
+  <div style="position: initial;" class="myCard card my-3" *ngFor="let app of appointment">
+    <div class="card-header text-muted tools">
+      <h6 class="card-title text-end">
+        <span *ngFor="let emp of employee">
+          <span *ngIf="emp.id == app.idAppEmp?.id">{{emp.fullName}}<br/></span>
+        </span>
+      </h6>
+    </div>
+    <div class="m-2">
+      <span>Дата: </span><i>{{app.dateApp}}</i><br/>
+      <span>Должность: </span>
+          <span *ngFor="let pos of position">
+            <span *ngIf="pos.id == app.idAppPos?.id"><i>{{pos.name}}</i><br/></span>
+          </span>
+      <span>Департамент: </span>
+          <span *ngFor="let dep of department">
+            <span *ngIf="dep.id == app.idAppDep?.id"><i>{{dep.name}}</i><br/></span>
+          </span>
+    </div>
+    <div class="card-footer text-muted tools">
+      <div class="row justify-content-end">
+        <div class="col-auto">
+          <small class="text-muted">
+            <a [routerLink]="[linkApp, app.id]"><span>Edit</span></a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

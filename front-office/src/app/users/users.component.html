@@ -1,0 +1,25 @@
+<a class="btn btn-outline-success mb-4" href="/registration">Добавить пользователя</a>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">ФИО</th>
+    <th scope="col">Login</th>
+    <th scope="col">Password</th>
+    <th scope="col">Сhange</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let use of users">
+      <td>{{use.idUseEmp?.fullName}}</td>
+      <td>{{use.name}}</td>
+      <td>{{use.password}}</td>
+      <td>
+        <div class="form-group mb-5">
+          <a class="myCard btn btn-outline-success mr-2" [routerLink]="[linkUse, use.id]">Редактировать</a>
+          <a class="myCard btn btn-outline-danger" (click)="remove(use.id)">Удалить</a>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

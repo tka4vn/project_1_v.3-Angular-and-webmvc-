@@ -1,0 +1,29 @@
+svg#clouds {
+  position: fixed;
+  bottom: -160px;
+  left: -230px;
+  z-index: -10;
+  width: 1920px;
+  opacity: 50%;
+}
+.myCard:not(.highlight-card):hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease-in-out;
+  border-radius: 4px;
+}
+.myCard {
+  border-radius: 4px;
+}
+.myNav {
+  box-shadow: 0 1px 17px rgba(0, 0, 0, 0.20);
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.container {
+  margin-top: 100px;
+}
+.card {
+  position: initial;
+}

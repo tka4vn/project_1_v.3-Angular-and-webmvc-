@@ -1,0 +1,76 @@
+<a class="myCard btn btn-outline-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+  Новое заявка
+</a>
+<div class="collapse" id="collapseExample">
+  <div class="form-group mt-3">
+    <div class="myCard form-group">
+      <input type="date" class="form-control"
+             [(ngModel)]="newDateReq" placeholder="Введите дату">
+    </div>
+    <div class="myCard input-group mb-3">
+      <select class="custom-select" [(ngModel)]="newIdReqSer" >
+        <option value="0">Выберите сервис ...</option>
+        <option *ngFor="let ser of services" [value]="ser.idServices">{{ser.name}}</option>
+      </select>
+    </div>
+    <div class="myCard input-group mb-3">
+      <select class="custom-select" [(ngModel)]="newIdReqRol">
+        <option class="select" value="0">Выберите роль ...</option>
+        <ng-container *ngFor="let ser of services"><ng-container  *ngIf="ser.idServices == newIdReqSer"><ng-container *ngFor="let idSerRol of ser.idSerRol">
+          <option [value]="idSerRol.idRole"> {{idSerRol.name}}</option>
+        </ng-container></ng-container></ng-container>
+      </select>
+    </div>
+    <div class="form-group mb-5">
+      <button type="submit" class="myCard btn btn-outline-success" (click)="addRequest()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="card-columns">
+  <div class="myCard card my-3" *ngFor="let req of request">
+    <div class="card-header text-muted tools">
+      <ng-container *ngFor="let use of users"><ng-container *ngIf="req.idReqUse?.id == use.id">
+        Пользователь: {{use.name}}
+        <ng-container *ngIf="use.name == idUser"><span style="float: right;"><a (click)="removeRequest(req.id)" style="color: #e11c1c; cursor: pointer;">х</a></span></ng-container>
+      </ng-container></ng-container>
+    </div>
+    <div class="m-2">
+      <span>Дата: </span><i>{{req.dateReq}}</i><br/>
+      <span>Сервис: </span><i>{{req.idReqSer?.name}}</i><br/>
+      <span>Роль: </span><i>{{req.idReqRol?.name}}</i><br/>
+      <span>Статус: </span><i>{{req.idReqSta?.name}}</i><br/>
+    </div>
+    <div class="card-footer text-muted tools " style="height: 65px;">
+      <div class="row justify-content-end">
+        <div>
+          <!--Логика для Владельца-->
+          <!--Если текущий пользователь владелец-->
+          <ng-container *ngFor="let ing of ingress"><ng-container *ngIf="req.idReqSer?.idServices == ing.idIngSer.idServices"><ng-container *ngFor="let use of users"><ng-container *ngIf="use.name == idUser"><ng-container *ngIf="use.id == ing.idIngUse.id"><ng-container *ngIf="ing.idIngRol.idRole == owner">
+            <!--Хотят стать администратором-->
+            <ng-container *ngIf="req.idReqRol?.idRole == admin">
+              <!--Показать спецкнопку если достут не открыт и занести данные в ingress-->
+              <ng-container *ngIf="ingress25(req.idReqSta?.idStatus, 25)"><a class="myCard btn btn-outline-success" (click)="addIngress(req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole); editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 25)">Одобрить Админа</a></ng-container>
+            </ng-container>
+            <!--Если НЕ хотят стать администратором-->
+            <ng-container *ngIf="req.idReqRol?.idRole != admin">
+              <!--Показать кнопку если достут не открыт-->
+              <ng-container *ngIf="ingress25(req.idReqSta?.idStatus, 25)"><a class="myCard btn btn-outline-success" (click)="editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 26)">Одобрить</a></ng-container>
+            </ng-container>
+            <!--Отказать в доступе и если есть в ingress удалить из ingress -->
+            <a class="myCard btn btn-outline-danger" (click)="editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 23); removeIngress(req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole)">Отказать</a>
+          </ng-container></ng-container></ng-container></ng-container></ng-container></ng-container>
+
+          <!--Логика для Администратора-->
+          <!--Если текущий пользователь Администратор-->
+          <ng-container *ngFor="let ing of ingress"><ng-container *ngIf="req.idReqSer?.idServices == ing.idIngSer.idServices"><ng-container *ngFor="let use of users"><ng-container *ngIf="use.name == idUser && use.id == ing.idIngUse.id && ing.idIngRol.idRole == admin && req.idReqRol?.idRole != owner && req.idReqRol?.idRole != admin && req.idReqSta?.idStatus != reqStaNew && req.idReqSta?.idStatus != reqStaDeniedOwner">
+            <!--Одобрить и добавить в ingress-->
+            <ng-container *ngIf="req.idReqSta?.idStatus != 25"><a class="myCard btn btn-outline-success" (click)="addIngress(req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole); editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 25)">Одобрить</a></ng-container>
+            <!--Отказать в доступе и если есть в ingress удалить из ingress -->
+            <a class="myCard btn btn-outline-danger" (click)="editRequest(req.id, req.dateReq, req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole, 24); removeIngress(req.idReqUse?.id, req.idReqSer?.idServices, req.idReqRol?.idRole)">Отказать</a>
+          </ng-container></ng-container></ng-container></ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

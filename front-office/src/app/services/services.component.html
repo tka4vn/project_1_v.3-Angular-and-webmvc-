@@ -1,0 +1,86 @@
+<a class="myCard btn btn-outline-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+  Создать сервис
+</a>
+<div class="collapse" id="collapseExample">
+  <div class="form-group mt-3">
+    <div class="form-group">
+      <input type="text" class="myCard form-control" placeholder="Введите имя" [(ngModel)]="newName">
+    </div>
+    <div class="form-group mb-5">
+      <button type="submit" class="myCard btn btn-outline-success" (click)="addService()" >Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div style="position: initial;" class="col-4 mt-4" *ngFor="let ser of services">
+    <div class="myCard card h-100">
+      <div class="card-header">
+        <div class="card-title text-end">
+          <strong>{{ser.name}}</strong>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class=" text-secondary"><b>Доступные роли: </b></div>
+          <span *ngFor="let idSerRol of ser.idSerRol">
+              <div class="mb-1">
+              <span *ngFor="let rol of roles">
+                <span *ngIf="idSerRol.idRole == rol?.idRole">
+                  <span class="ml-3 mr-3">{{rol.name}}</span>
+
+                  <span *ngFor="let ing of ingress">
+                    <span *ngIf="ing.idIngSer.idServices == ser?.idServices">
+                      <span *ngIf="ing.idIngRol.idRole == idSerRol.idRole">
+                        <span *ngFor="let use of users">
+                          <span *ngIf="use.id == ing.idIngUse.id">
+                            <span class="text-secondary"><i> | {{use.name}}</i></span>
+                          </span>
+                       </span>
+                      </span>
+                    </span>
+                  </span>
+
+                </span>
+              </span>
+              </div>
+          </span>
+
+      </div>
+      <div class="card-footer" style="height: 50px;">
+        <small class="text-muted">
+          <span *ngFor="let use of users">
+            <span *ngIf="use.name == idUser">
+              <span *ngFor="let ing of ingress">
+                <span *ngIf="ing.idIngUse.id == use.id">
+                  <span *ngIf="ing.idIngSer.idServices == ser.idServices">
+                    <span *ngFor="let rol of roles">
+                      <span *ngIf="ing.idIngRol.idRole == rol.idRole">
+                        <u>{{rol.name}}</u><span>&nbsp;</span>
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </span>
+
+          <span *ngFor="let use of users">
+            <span *ngIf="use.name == idUser">
+              <span *ngFor="let ing of ingress">
+                <span *ngIf="ing.idIngUse.id == use.id">
+                  <span *ngIf="ing.idIngSer.idServices == ser.idServices">
+                      <span *ngIf="ing.idIngRol.idRole == owner">
+                          <a [routerLink]="[linkSer, ser.idServices]"><span>| Редактировать</span></a>
+                      </span>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </span>
+
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

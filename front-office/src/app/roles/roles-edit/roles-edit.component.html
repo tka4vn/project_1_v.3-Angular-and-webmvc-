@@ -1,0 +1,37 @@
+<h4>Редактирование:</h4>
+  <div class="input-group mt-2">
+    <input type="text" name="name" value="{{rol?.name}}" [(ngModel)]="editName"
+           class="myCard form-control" aria-describedby="button-addon4">
+    <div class="input-group-append" id="button-addon4">
+      <a class="myCard btn btn-outline-success" (click)="edit(rol?.idRole)">Сохранить</a>
+      <a class="myCard btn btn-outline-danger"  (click)="remove()">Удалить</a>
+    </div>
+  </div>
+
+<div class="mt-4 mb-2">Список доступных сервисов у роли {{rol?.name}}:</div>
+
+<div class="btn-group dropright mb-3">
+  <button type="button" class="myCard btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Добавить
+  </button>
+  <div class="dropdown-menu">
+    <option style="cursor: pointer;" class="myCard dropdown-item" *ngFor="let ser of services" (click)="addService(ser.idServices)">
+      {{ser.name}}
+    </option>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" [routerLink]="[linkSer]">Создать сервис</a>
+  </div>
+</div>
+
+<span *ngFor="let idRolSer of rol?.idRolSer">
+    <li class="myCard input-group mb-3">
+      <div class="input-group-prepend">
+        <a class="btn btn-outline-danger" (click)="removeService(idRolSer.idServices)">x</a>
+      </div>
+      <div class="form-control" aria-describedby="basic-addon1">
+        {{idRolSer.name}}
+      </div>
+    </li>
+</span>
+
+

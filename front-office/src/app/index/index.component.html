@@ -1,0 +1,29 @@
+<nav class="myNav navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" [routerLink]="[linkAbout]">Tka4vn <small style="color: #eb1717;"><i>angular</i></small></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkAbout]">Главная</a>      </li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkReq]">Request</a></li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkSer]">Services</a></li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkRol]">Roles</a></li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkUse]">User list</a></li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkIng]">Ingress</a></li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkApp]">Appointment</a></li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkEmp]">Employee</a></li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkPos]">Position</a></li>
+      <li class="myCardNav nav-item"><a class="nav-link" [routerLink]="[linkDep]">Department</a></li>
+    </ul>
+    <div class="navbar-text mr-3"><u>{{idUser}}</u></div>
+    <form action="/logout" method="post">
+      <button class="myCardNav btn btn-outline-secondary" type="submit" [routerLink]="['/login']">Выход</button>
+    </form>
+  </div>
+</nav>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

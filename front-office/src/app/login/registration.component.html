@@ -1,0 +1,43 @@
+<nav class="myNav navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">Tka4vn <small style="color: #eb1717;"><i>angular</i></small></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link"></a>
+      </li>
+    </ul>
+    <button class="btn btn-outline-secondary" type="submit" [routerLink]="['/login']">Выход</button>
+  </div>
+</nav>
+
+<div class="container" style="margin-left: 200px; margin-top: 150px;">
+  <h5 class="mb-4">Регистрация пользователя:</h5>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">ФИО пользователя:</label>
+    <div class="col-sm-6">
+      <input type="text" class="myCard form-control" placeholder="Введите ФИО ..." [(ngModel)]="newEmployee">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Логин:</label>
+    <div class="col-sm-6">
+      <input type="text" class="myCard form-control" placeholder="Введите логин ..." [(ngModel)]="newName">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Пароль:</label>
+    <div class="col-sm-6">
+      <input type="text" class="myCard form-control" placeholder="Введите пароль ..." [(ngModel)]="newPassword">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-6 mt-4">
+      <button class="myCard btn btn-outline-primary" (click)="addUser()" [routerLink]="['/login']">Регистрация</button>
+    </div>
+  </div>
+</div>

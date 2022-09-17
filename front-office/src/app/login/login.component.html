@@ -1,0 +1,38 @@
+<nav class="myNav navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">Tka4vn <small style="color: #eb1717;"><i>angular</i></small></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link"></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" style="margin-left: 200px; margin-top: 150px;">
+<h5 class="mb-4">Авторизируйтесь:</h5>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Имя пользователя:</label>
+    <div class="col-sm-6">
+      <select class="custom-select myCard" [(ngModel)]="userId">
+        <option class="myCard" value="0">Выберите сотрудника ...</option>
+        <option class="myCard" *ngFor="let user of users" [value]="user.name">{{user.name}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-6 mt-3">
+    <button class="btn btn-outline-primary myCard" (click)="loginUser()">Вход</button>
+    <a class="btn btn-outline-success ml-2 myCard" href="/registration">Регистрация</a>
+    </div>
+  </div>
+</div>
+
+
+
+

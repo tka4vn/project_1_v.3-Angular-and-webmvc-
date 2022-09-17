@@ -1,0 +1,24 @@
+<a class="myCard btn btn-outline-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+  Создать роль
+</a>
+<div class="collapse" id="collapseExample">
+  <div class="form-group mt-3">
+    <div class="form-group">
+      <input type="text" class="myCard form-control" placeholder="Введите имя" [(ngModel)]="newName">
+    </div>
+    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+    <div class="form-group mb-5">
+      <button type="submit" class="myCard btn btn-outline-success" (click)="addRole()" >Сохранить</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="card-columns">
+  <div class="myCard card my-3"  *ngFor="let rol of roles">
+    <div class="m-2">
+      <a [routerLink]="[linkRol, rol.idRole]"><span>{{rol.name}}</span></a><br/>
+    </div>
+  </div>
+</div>
+
